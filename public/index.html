@@ -1,47 +1,95 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-  <!--  require -->
-  <!--  require bootstrap css-->
-  <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!--  require jQuery-->
-  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CSCI 2720 Group Project</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <script src="/js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script src="js/headerCtrl.js"></script>
+  </head>
+
+  <body>
+    <!-- start nav bar -->
+    <nav ng-app="buildHeader" ng-controller="headerCtrl" ng-init="login=false" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">CSCI 2720 Project</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form ng-submit="singIn()" class="navbar-form navbar-right" ng-if="!login">
+            <div class="form-group">
+              <input type="text" ng-model="$parent.userData.userid" placeholder="Username" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" ng-model="$parent.userData.passwd" placeholder="Password" class="form-control">
+            </div>
+            <button class="btn btn-success">Sign in</button>
+          </form>
+          <p ng-if="login" class="navbar-text navbar-right" ng-cloak>Signed in as {{userid}}</p>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+    <!--  end nav bar-->
 
 
-  <!--  setting up -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  start of jumbortron-->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>CSCI 2720 Project</h1>
+        <p>This is a web application that can be used to manage multiple choice(MC) question.</p>
+        <p><a class="btn btn-primary btn-lg" href="/viewMC.html" role="button">View MC</a></p>
+      </div>
+    </div>
+    <!--  end of jumbotron-->
 
+    <!-- start of groud member and id -->
+    <div class="container">
+      <div class="panel panel-info">
+        <!-- panel heading -->
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <a role="button" data-toggle="collapse" data-target="#memberList">
+              Group Member
+            </a>
+          </h3>
+        </div>
 
-</head>
-<body>
-  <div class="container">
-    <div class="row">
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-</div>
-<div class="row">
-  <div class="col-md-8">.col-md-8</div>
-  <div class="col-md-4">.col-md-4</div>
-</div>
-<div class="row">
-  <div class="col-md-4">.col-md-4</div>
-  <div class="col-md-4">.col-md-4</div>
-  <div class="col-md-4">.col-md-4</div>
-</div>
-<div class="row">
-  <div class="col-md-6">.col-md-6</div>
-  <div class="col-md-6">.col-md-6</div>
-</div>
-  </div>
-</body>
+        <!--  panel body-->
+        <div id="memberList" class="panel-collapse collapse">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-4">
+                <h2>RYAN, CHAN Ho Yan</h2>
+                <p>SID: 11550xxxxx</p>
+              </div>
+              <div class="col-md-4">
+                <h2>ANTHONY, WONG Ka Chun</h2>
+                <p>SID: 11550xxxxx</p>
+             </div>
+              <div class="col-md-4">
+                <h2>NEO, WONG Ka Lam</h2>
+                <p>SID: 11550xxxxx</p>
+              </div>
+            </div><!-- end of row-->
+          </div> <!-- end of panel body-->
+        </div>
+
+      </div> <!-- end of panel-->
+    </div> <!-- end of container-->
+    <!-- end of groud member and id -->
+
+  </body>
 </html>

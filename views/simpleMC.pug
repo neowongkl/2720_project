@@ -1,0 +1,9 @@
+doctype html
+html
+  head
+    include head.html
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="/ctrl/simpleMC_controller.js"></script>
+  body(ng-app='simpleMCApp')
+    include header.pug
+    include simpleMC.html
