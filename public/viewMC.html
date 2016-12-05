@@ -8,16 +8,20 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
     <script src="/js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.1.js"></script>
     <script src="js/module.js"></script>
     <script src="js/headerCtrl.js"></script>
     <script>
     app.controller("mcCtrl", function($scope, $http){
         console.log("in veiwmc ctrl");
 
+        $scope.pageSize = 2;
+        $scope.currentPage = 1;
         $scope.mcs;
 
         $http.get('/getmc').success(function(response){
@@ -25,7 +29,17 @@
             console.log(response);
             $scope.mcs = response;
         });
-      });
+    });
+
+    app.filter('startForm', function() {
+      return function(input, start) {
+        if(input) {
+            start = +start; //parse to int
+            return input.slice(start);
+        }
+        return [];
+      }
+    });
 
     </script>
 
@@ -81,8 +95,8 @@
                 <th>C</th>
                 <th>D</th>
               </tr>
-              <tr ng-repeat="mc in mcs | filter:{Creator:name}">
-                <td>{{mc._id}}</td>
+              <tr ng-repeat="mc in mcs | startForm: (currentPage - 1) * pageSize | limitTo: pageSize | filter:{Creator:name}">
+                <td>{{$index+1}}</td>
                 <td>{{mc.Creator}}</td>
                 <td>{{mc.Title}}</td>
                 <td>{{mc.Description}}</td>
@@ -93,10 +107,10 @@
             </tr>
           </thead>
         </table>
+        <div>
+          <ul uib-pagination total-items="mcs.length" ng-model="currentPage" items-per-page="pageSize"></ul>
+        </div>
       </div>
     </div>
-
-
-
   </body>
 </html>

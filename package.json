@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular-ui-bootstrap": "^2.3.0",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "cookie-parser": "^1.4.3",

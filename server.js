@@ -20,6 +20,7 @@ var model = require("./db/model.js");
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use('/css', express.static(__dirname + '/public/stylesheets')); // redirect CSS bootstrap
 app.use('/js',express.static(__dirname + '/public/controllers')); //redirect controllers
 
 app.get('/getmc', function(req, res){
@@ -83,7 +84,7 @@ app.post('/login', function(req, res) {
 });
 
 
-app.get('/viewMC.html', function(req, res){
+app.get('/viewMC', function(req, res){
   console.log("go to viewMC.html")
   res.sendFile(__dirname + '/public/viewMC.html')
 });
