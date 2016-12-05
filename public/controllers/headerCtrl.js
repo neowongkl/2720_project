@@ -1,6 +1,4 @@
-var headerApp = angular.module("buildHeader",[]);
-
-headerApp.controller("headerCtrl", function($scope, $http){
+app.controller("headerCtrl", function($scope, $http){
   console.log("headerCtrl");
   $scope.userid = "";
   $scope.login = false;

@@ -22,6 +22,17 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redi
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/js',express.static(__dirname + '/public/controllers')); //redirect controllers
 
+app.get('/getmc', function(req, res){
+  console.log("get mc");
+  model.Mc.find({}, function(err, mcs){
+    if(err){
+      console.log("err in get mc");
+      console.log(err);
+      res.sendStatus(500);
+    }
+    res.json(mcs);
+  });
+});
 
 app.get('/checkCookie', function(req, res){
   console.log("check cookie");
@@ -72,7 +83,7 @@ app.post('/login', function(req, res) {
 });
 
 
-app.get('/viewMC', function(req, res){
+app.get('/viewMC.html', function(req, res){
   console.log("go to viewMC.html")
   res.sendFile(__dirname + '/public/viewMC.html')
 });
