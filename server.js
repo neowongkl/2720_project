@@ -16,6 +16,11 @@ var JWT_SECRET = 'anthony_is_handsome';
 require("./db/db.js");
 var model = require("./db/model.js");
 
+// view engine setup
+app.set('view engine', 'pug')
+
+// app.use(express.static(path.join(__dirname, 'public')));
+
 // routing the css and js
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
@@ -86,8 +91,13 @@ app.post('/login', function(req, res) {
 
 app.get('/viewMC', function(req, res){
   console.log("go to viewMC.html")
-  res.sendFile(__dirname + '/public/viewMC.html')
+  // res.sendFile(__dirname + '/public/viewMC.html')
+  res.render('simpleMC', { title: 'CSCI 2720 Project', message: 'Hello there!', user: 'john'})
 });
+
+app.get('/', function (req, res) {
+  res.render('index', { title: 'CSCI 2720 Project', message: 'Hello there!', user: 'john'})
+})
 
 app.use('/',express.static(__dirname + '/public'));
 

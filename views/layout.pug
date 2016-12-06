@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= title
+    link(href='/css/bootstrap.css', rel='stylesheet')
+    link(href='/css/main.css', rel='stylesheet')
+    block header
+
+  body(ng-app='app')
+    // start nav bar
+    nav.navbar.navbar-inverse.navbar-fixed-top(ng-controller='headerCtrl', ng-init='login=false')
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand CSCI 2720 Project
+        #navbar.navbar-collapse.collapse
+          if !user
+            form.navbar-form.navbar-right(ng-submit='singIn()')
+              .form-group
+                input.form-control(type='text', ng-model='$parent.userData.userid', placeholder='Username')
+              .form-group
+                input.form-control(type='password', ng-model='$parent.userData.passwd', placeholder='Password')
+              button.btn.btn-success Sign in
+          else
+            p.navbar-text.navbar-right Signed in as #{user}
+        // /.navbar-collapse
+      // end nav bar
+    block content
+
+    script(src='/js/jquery.min.js')
+    script(src='js/bootstrap.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js')
+    script(src='//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.1.js')
+    script(src='js/module.js')
+    script(src='js/headerCtrl.js')
+
+    block scriptcontent
