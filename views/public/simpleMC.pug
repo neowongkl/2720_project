@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  .container-fluid(ng-controller='mcCtrl')
+    form.form-inline
+      .form-group
+        label Creator
+        input(ng-model='name', type='text', placeholder='Ceator')
+        label Tag
+        input(ng-model='tag', type='text', placeholder='Tag')
+    .table-responsive
+      table.table.table-bordered
+        thead
+          tr
+            th ID
+            th Creator
+            th Title
+            th Description
+            th A
+            th B
+            th C
+            th D
+            th Tags
+          tr(ng-repeat='mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag}) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize')
+            td {{$index+1}}
+            td {{mc.Creator}}
+            td {{mc.Title}}
+            td {{mc.Description}}
+            td {{mc.A}}
+            td {{mc.B}}
+            td {{mc.C}}
+            td {{mc.D}}
+            td {{mc.Tags}}
+      div
+        ul(uib-pagination='', total-items='filterMC.length', ng-model='currentPage', items-per-page='pageSize')
+
+block scriptcontent

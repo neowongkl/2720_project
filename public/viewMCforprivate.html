@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,23 +17,39 @@
     <script src="js/headerCtrl.js"></script>
     <script>
     app.controller("mcCtrl", function($scope, $http){
-        console.log("in veiwmc ctrl diu");
+        console.log("in veiwmc ctrl dllm");
 
         $scope.pageSize = 2;
         $scope.currentPage = 1;
         $scope.mcs;
 
-        $http.get('/getmc').success(function(response){
-            console.log("getmc");
-            console.log(response);
-            $scope.mcs = response;
-        });
+        var refresh = function(){
+          $http.get('/getmc').success(function(response){
+              console.log("getmc");
+              console.log(response);
+              $scope.mcs = response;
+          });
+        };
+
+        refresh();
 
         $scope.pageChanged = function() {
       	  var startPos = ($scope.page - 1) * 3;
       	  //$scope.displayItems = $scope.totalItems.slice(startPos, startPos + 3);
       	  console.log($scope.page);
-    	};
+      	};
+
+        $scope.remove = function(id) {
+          console.log(id);
+          $http.delete('/delete/'+id).success(function(response){
+            console.log(response);
+            refresh();
+          });
+
+
+        };
+
+
 
 
     });
@@ -92,6 +107,10 @@
           <input ng-model="tag" type="text" placeholder="Tag">
         </div>
       </form>
+
+      <!--  start of modat-->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Question</button>
+
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
@@ -104,10 +123,11 @@
                 <th>B</th>
                 <th>C</th>
                 <th>D</th>
-                <th>Tags</th>
+                <th>Action</th>
               </tr>
               <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag}) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize">
-                <td>{{$index+1}}</td>
+                <!-- <td>{{$index+1}}</td> -->
+                <td>{{mc._id}}</td>
                 <td>{{mc.Creator}}</td>
                 <td>{{mc.Title}}</td>
                 <td>{{mc.Description}}</td>
@@ -115,7 +135,7 @@
                 <td>{{mc.B}}</td>
                 <td>{{mc.C}}</td>
                 <td>{{mc.D}}</td>
-                <td>{{mc.Tags}}</td>
+                <td><button class="btn btn-danger" ng-click="remove(mc._id)">Remove</button><button class="btn btn-warning" ng-click="edit(mc._id)">Edit</button></td>
             </tr>
           </thead>
         </table>
@@ -124,5 +144,64 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="mccreator" class="control-label">Creator:</label>
+                <input type="text" class="form-control" id="mccreator">
+              </div>
+              <div class="form-group">
+                <label for="mctitle" class="control-label">Title:</label>
+                <input type="text" class="form-control" id="mctitle">
+              </div>
+              <div class="form-group">
+                <label for="mcdesc" class="control-label">Description:</label>
+                <textarea class="form-control" id="mcdesc"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="mca" class="control-label">Answer A:</label>
+                <input type="text" class="form-control" id="mca">
+              </div>
+              <div class="form-group">
+                <label for="mcb" class="control-label">Answer B:</label>
+                <input type="text" class="form-control" id="mcb">
+              </div>
+              <div class="form-group">
+                <label for="mcc" class="control-label">Answer C:</label>
+                <input type="text" class="form-control" id="mcc">
+              </div>
+              <div class="form-group">
+                <label for="mcd" class="control-label">Answer D:</label>
+                <input type="text" class="form-control" id="mcd">
+              </div>
+              <div class="form-group">
+                <label for="mcd" class="control-label">Answer D:</label>
+                <input type="text" class="form-control" id="mcd">
+              </div>
+              <div class="form-group">
+                <label for="mcans" class="control-label">Answer:</label>
+                <input type="text" class="form-control" id="mcans">
+              </div>
+              <div class="form-group">
+                <label for="mctag" class="control-label">Tags:</label>
+                <textarea class="form-control" id="mctag"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  end of modal-->
   </body>
 </html>

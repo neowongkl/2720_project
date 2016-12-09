@@ -17,7 +17,7 @@ require("./db/db.js");
 var model = require("./db/model.js");
 
 // view engine setup
-app.set('view engine', 'pug')
+app.set('view engine', 'pug');
 
 // app.use(express.static(path.join(__dirname, 'public')));
 
@@ -26,7 +26,15 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); /
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/css', express.static(__dirname + '/public/stylesheets')); // redirect CSS bootstrap
-app.use('/js',express.static(__dirname + '/public/controllers')); //redirect controllers
+app.use('/js',express.static(__dirname + '/controllers')); //redirect controllers
+
+app.delete('/delete/:id',function(req, res){
+    var id = req.params.id;
+    console.log(id);
+    model.Mc.remove({_id: id}, function(err, items){
+      res.json(items);
+    });
+});
 
 app.get('/getmc', function(req, res){
   console.log("get mc");
@@ -54,6 +62,12 @@ app.get('/checkCookie', function(req, res){
 
 });
 
+app.get('/logout', function(req, res){
+  console.log("logout");
+  res.clearCookie('token');
+  res.redirect('/');
+});
+
 app.post('/login', bodyParser.urlencoded({extended: true}));
 app.post('/login', function(req, res) {
   console.log("longin: "+ req.body.userid);
@@ -69,11 +83,11 @@ app.post('/login', function(req, res) {
     function(err, user){
       if(err){
         console.log("err in find user");
-        res.status(500).jsonp({ error: 'find user error' });
+        res.redirect('/');
       }
       if(user == null){
         console.log("user not found")
-        res.json(null);
+        res.redirect('/');
       }
       else{
         console.log("find user");
@@ -81,8 +95,7 @@ app.post('/login', function(req, res) {
         res.cookie('token', token,{
           expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60)
         });
-        // res.redirect('/'); // Redirect the user to the "main page"
-        res.json(user.username); // Redirect back to current page
+        res.redirect('/'); // Redirect the user to the "main page"
       }
   });
 
@@ -90,16 +103,69 @@ app.post('/login', function(req, res) {
 
 
 app.get('/viewMC', function(req, res){
-  console.log("go to viewMC.html")
-  // res.sendFile(__dirname + '/public/viewMC.html')
-  res.render('simpleMC', { title: 'CSCI 2720 Project', message: 'Hello there!', user: 'john'})
+  console.log("go to viewMC.html");
+  var username;
+  if(req.cookies.token != undefined){
+    console.log("have cookie");
+    var token = req.cookies.token;
+    var decoded = jwt.decode(token, JWT_SECRET);
+    model.User.findOne(
+      {username: decoded['userid'], password: decoded['passwd']},
+      function(err, user){
+        if(err){
+          console.log("err in find user: go to public viewMC");
+          res.render('public/simpleMC', { user: username});
+        }
+        if(user == null){
+          console.log("user not found: go to public viewMC");
+          res.render('public/simpleMC', { user: username});
+        }
+        else{
+          console.log("find user: go to private viewMC");
+          username = decoded['userid'];
+          res.sendFile(__dirname + '/public/viewMCforprivate.html');
+          // res.render('private/simpleMC', { user: username});
+        }
+    });
+  }
+  else{
+    console.log("no cookie: go to public viewMC");
+    res.render('public/simpleMC', { user: username});
+  }
 });
 
-app.get('/', function (req, res) {
-  res.render('index', { title: 'CSCI 2720 Project', message: 'Hello there!', user: 'john'})
-})
 
-app.use('/',express.static(__dirname + '/public'));
+app.get('/', function (req, res) {
+  console.log("go to index.html");
+  var username;
+  if(req.cookies.token != undefined){
+    console.log("have cookie");
+    var token = req.cookies.token;
+    var decoded = jwt.decode(token, JWT_SECRET);
+    model.User.findOne(
+      {username: decoded['userid'], password: decoded['passwd']},
+      function(err, user){
+        if(err){
+          console.log("err in find user: go to public index");
+          res.render('public/index', { user: username});
+        }
+        if(user == null){
+          console.log("user not found: go to public index");
+          res.render('public/index', { user: username});
+        }
+        else{
+          console.log("find user: go to private index");
+          username = decoded['userid'];
+          res.render('private/index', { user: username});
+        }
+    });
+  }
+  else{
+    console.log("no cookie: go to public index");
+    res.render('public/index', { user: username});
+  }
+
+});
 
 app.listen(8080);
 console.log('8080 is the magic port');

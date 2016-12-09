@@ -2,14 +2,14 @@ doctype html
 html
   head
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title= title
+    title CSCI 2720 Project
     link(href='/css/bootstrap.css', rel='stylesheet')
     link(href='/css/main.css', rel='stylesheet')
     block header
 
   body(ng-app='app')
     // start nav bar
-    nav.navbar.navbar-inverse.navbar-fixed-top(ng-controller='headerCtrl', ng-init='login=false')
+    nav.navbar.navbar-inverse.navbar-fixed-top(ng-controller='headerCtrl')
       .container
         .navbar-header
           button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
@@ -17,17 +17,18 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand CSCI 2720 Project
+          a.navbar-brand(href="/") CSCI 2720 Project
         #navbar.navbar-collapse.collapse
           if !user
-            form.navbar-form.navbar-right(ng-submit='singIn()')
+            form.navbar-form.navbar-right(action="/login", method="post")
               .form-group
-                input.form-control(type='text', ng-model='$parent.userData.userid', placeholder='Username')
+                input.form-control(type='text', ng-model='$parent.userData.userid', placeholder='Username', name='userid')
               .form-group
-                input.form-control(type='password', ng-model='$parent.userData.passwd', placeholder='Password')
-              button.btn.btn-success Sign in
+                input.form-control(type='password', ng-model='$parent.userData.passwd', placeholder='Password', name='passwd')
+              button.btn.btn-success(type="submit" value="Submit") Sign in
           else
-            p.navbar-text.navbar-right Signed in as #{user}
+            <a class="btn btn-danger navbar-btn navbar-right" href="/logout" role="button">Logout</a>
+            p.navbar-text.navbar-right Signed in as #{user}&nbsp;&nbsp;
         // /.navbar-collapse
       // end nav bar
     block content
@@ -39,5 +40,6 @@ html
     script(src='//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.1.js')
     script(src='js/module.js')
     script(src='js/headerCtrl.js')
+    script(src='js/simpleViewmcCtrl.js')
 
     block scriptcontent
