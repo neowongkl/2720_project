@@ -5,11 +5,15 @@ app.controller("mcCtrl", function($scope, $http){
     $scope.currentPage = 1;
     $scope.mcs;
 
-    $http.get('/getmc').success(function(response){
-        console.log("getmc");
-        console.log(response);
-        $scope.mcs = response;
-    });
+    var refresh = function(){
+      $http.get('/getmc').success(function(response){
+          console.log("getmc");
+          console.log(response);
+          $scope.mcs = response;
+      });
+    };
+
+    refresh();
 
     $scope.pageChanged = function() {
       var startPos = ($scope.page - 1) * 3;
@@ -17,6 +21,14 @@ app.controller("mcCtrl", function($scope, $http){
       console.log($scope.page);
   };
 
+  //private
+  $scope.remove = function(id) {
+    console.log(id);
+    $http.delete('/delete/'+id).success(function(response){
+      console.log(response);
+      refresh();
+    });
+  };
 
 });
 

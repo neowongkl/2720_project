@@ -1,104 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>CSCI 2720 Group Project</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
-    <script src="/js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.1.js"></script>
-    <script src="js/module.js"></script>
-    <script src="js/headerCtrl.js"></script>
-    <script>
-    app.controller("mcCtrl", function($scope, $http){
-        console.log("in veiwmc ctrl dllm");
-
-        $scope.pageSize = 2;
-        $scope.currentPage = 1;
-        $scope.mcs;
-
-        var refresh = function(){
-          $http.get('/getmc').success(function(response){
-              console.log("getmc");
-              console.log(response);
-              $scope.mcs = response;
-          });
-        };
-
-        refresh();
-
-        $scope.pageChanged = function() {
-      	  var startPos = ($scope.page - 1) * 3;
-      	  //$scope.displayItems = $scope.totalItems.slice(startPos, startPos + 3);
-      	  console.log($scope.page);
-      	};
-
-        $scope.remove = function(id) {
-          console.log(id);
-          $http.delete('/delete/'+id).success(function(response){
-            console.log(response);
-            refresh();
-          });
-
-
-        };
-
-
-
-
-    });
-
-    app.filter('startForm', function() {
-      return function(input, start) {
-        if(input) {
-            start = +start; //parse to int
-            return input.slice(start);
-        }
-        return [];
-      }
-    });
-
-    </script>
-
-  </head>
-
-  <body ng-app="app" >
-    <!-- start nav bar -->
-    <nav ng-controller="headerCtrl" ng-init="login=false" class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand">CSCI 2720 Project</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form ng-submit="singIn()" class="navbar-form navbar-right" ng-if="!login">
-            <div class="form-group">
-              <input type="text" ng-model="$parent.userData.userid" placeholder="Username" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" ng-model="$parent.userData.passwd" placeholder="Password" class="form-control">
-            </div>
-            <button class="btn btn-success">Sign in</button>
-          </form>
-          <p ng-if="login" class="navbar-text navbar-right" ng-cloak>Signed in as {{userid}}</p>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
-    <!--  end nav bar-->
-
-
-    <div ng-controller="mcCtrl" class="container-fluid">
+<div ng-controller="mcCtrl" class="container-fluid">
       <form class="form-inline">
         <div class="form-group">
           <label>Creator</label>
@@ -125,7 +25,7 @@
                 <th>D</th>
                 <th>Action</th>
               </tr>
-              <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag}) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize">
+              <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag}) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize" ng-cloak>
                 <!-- <td>{{$index+1}}</td> -->
                 <td>{{mc._id}}</td>
                 <td>{{mc.Creator}}</td>
@@ -202,6 +102,3 @@
         </div>
       </div>
     </div>
-    <!--  end of modal-->
-  </body>
-</html>

@@ -123,8 +123,8 @@ app.get('/viewMC', function(req, res){
         else{
           console.log("find user: go to private viewMC");
           username = decoded['userid'];
-          res.sendFile(__dirname + '/public/viewMCforprivate.html');
-          // res.render('private/simpleMC', { user: username});
+          // res.sendFile(__dirname + '/public/viewMCforprivate.html');
+          res.render('private/viewMCforprivate', { user: username});
         }
     });
   }
