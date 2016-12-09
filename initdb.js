@@ -34,10 +34,10 @@ model.Mc.remove({},function(err){
 function addMC(){
   console.log("add dummy mc");
   var MCs = [
-    _mc("mc1", "test1", "1a","1b","1c","1d", "1a", ["tag1", "tag2", "tag3"], "Tony", new Date(2016, 11, 10)),
-    _mc("mc2", "test2", "2a","2b","2c","2d", "2a", ["tag4", "tag5", "tag6"], "john", new Date(2016, 11, 11)),
-    _mc("mc3", "test3", "3a","3b","3c","3d", "3a", ["tag7", "tag8", "tag9"], "jane", new Date(2016, 11, 12)),
-    _mc("mc4", "test4", "4a","4b","4c","4d", "4a", ["tag10", "tag11", "tag12"], "ryan", new Date(2016, 11, 13))
+    _mc("mc1", "test1", "1a","1b","1c","1d", "1a", ["tag1", "tag2", "tag3"], "Tony", new Date(2016, 11, 13)),
+    _mc("mc2", "test2", "2a","2b","2c","2d", "2a", ["tag4", "tag5", "tag6"], "john", new Date(2016, 11, 10)),
+    _mc("mc3", "test3", "3a","3b","3c","3d", "3a", ["tag7", "tag8", "tag9"], "jane", new Date(2016, 11, 11)),
+    _mc("mc4", "test4", "4a","4b","4c","4d", "4a", ["tag10", "tag11", "tag12"], "ryan", new Date(2016, 11, 28))
   ];
   model.Mc.create(MCs, function(err){
     if(err) console.log(err);

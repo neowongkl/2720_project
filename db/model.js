@@ -18,7 +18,7 @@ var MCSchema = Schema({
   C: { type: String, required: true},
   D: { type: String, required: true},
   Answer: { type: String, required: true},
-  Tags: [{ type: String, required: true}],
+  Tags: [{ type: String, required: false}],
   Creator: { type: String, required: true},
   LastModfiedTime : { type: Date, default: Date.now, required: true }
 });

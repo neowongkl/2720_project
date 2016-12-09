@@ -28,6 +28,49 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/css', express.static(__dirname + '/public/stylesheets')); // redirect CSS bootstrap
 app.use('/js',express.static(__dirname + '/controllers')); //redirect controllers
 
+// add mc
+app.post('/addmc', function(req, res){
+  console.log("add mc");
+
+  var tags = req.body.Tags;
+  if (tags) {
+    tags = tags.match(/[^\s,]+/g);
+    if (tags == null)
+      tags = [];
+  }
+  else
+    tags = [];
+
+  var mc = {
+    Creator: req.body.Creator,
+    Title: req.body.Title,
+    Description: req.body.Description,
+    A: req.body.A,
+    B: req.body.B,
+    C: req.body.C,
+    D: req.body.D,
+    Answer: req.body.Answer,
+    Tags: tags
+  }
+  model.Mc.create(mc, function(err, response){
+    if(err){
+      res.json(err);
+    }
+    res.json(response);
+  });
+
+});
+
+// get one mc
+app.get('/getonemc/:id', function(req, res){
+  console.log("get one mc");
+  var id = req.params.id;
+  model.Mc.findOne({_id: id}, function(err, mc){
+    res.json(mc);
+  });
+});
+
+// delete one mc
 app.delete('/delete/:id',function(req, res){
     var id = req.params.id;
     console.log(id);
@@ -36,8 +79,9 @@ app.delete('/delete/:id',function(req, res){
     });
 });
 
-app.get('/getmc', function(req, res){
-  console.log("get mc");
+// get all mc
+app.get('/getmcs', function(req, res){
+  console.log("get mcs");
   model.Mc.find({}, function(err, mcs){
     if(err){
       console.log("err in get mc");
@@ -48,6 +92,7 @@ app.get('/getmc', function(req, res){
   });
 });
 
+// check cookie and get username
 app.get('/checkCookie', function(req, res){
   console.log("check cookie");
   var userid = null;
@@ -65,7 +110,8 @@ app.get('/checkCookie', function(req, res){
 app.get('/logout', function(req, res){
   console.log("logout");
   res.clearCookie('token');
-  res.redirect('/');
+  res.redirect('back');
+  // res.redirect('/');
 });
 
 app.post('/login', bodyParser.urlencoded({extended: true}));
@@ -83,11 +129,13 @@ app.post('/login', function(req, res) {
     function(err, user){
       if(err){
         console.log("err in find user");
-        res.redirect('/');
+        res.redirect('back');
+        // res.redirect('/');
       }
       if(user == null){
-        console.log("user not found")
-        res.redirect('/');
+        console.log("user not found");
+        res.redirect('back');
+        // res.redirect('/');
       }
       else{
         console.log("find user");
@@ -95,13 +143,14 @@ app.post('/login', function(req, res) {
         res.cookie('token', token,{
           expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60)
         });
-        res.redirect('/'); // Redirect the user to the "main page"
+        res.redirect('back');
+        // res.redirect('/'); // Redirect the user to the "main page"
       }
   });
 
 });
 
-
+// go to view mc
 app.get('/viewMC', function(req, res){
   console.log("go to viewMC.html");
   var username;
@@ -134,7 +183,7 @@ app.get('/viewMC', function(req, res){
   }
 });
 
-
+//  go to  index
 app.get('/', function (req, res) {
   console.log("go to index.html");
   var username;
@@ -165,6 +214,13 @@ app.get('/', function (req, res) {
     res.render('public/index', { user: username});
   }
 
+});
+
+// go to detail page
+app.get('/:id', function(req, res){
+  console.log("go to detail page");
+  var id = req.params.id;
+  res.render('private/detailMCforprivate', {id: id});
 });
 
 app.listen(8080);

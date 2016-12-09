@@ -4,12 +4,19 @@ app.controller("mcCtrl", function($scope, $http){
     $scope.pageSize = 2;
     $scope.currentPage = 1;
     $scope.mcs;
+    $scope.user;
 
     var refresh = function(){
-      $http.get('/getmc').success(function(response){
-          console.log("getmc");
+      $http.get('/getmcs').success(function(response){
+          console.log("getmcs");
           console.log(response);
           $scope.mcs = response;
+
+      });
+      $http.get('/checkCookie').success(function(response){
+          console.log("checkCookie");
+          console.log(response);
+          $scope.user = response;
       });
     };
 
@@ -28,6 +35,88 @@ app.controller("mcCtrl", function($scope, $http){
       console.log(response);
       refresh();
     });
+  };
+
+  $scope.canRemove = function(Creator){
+    console.log("can remove?");
+    return (Creator == $scope.user);
+  };
+
+  function checkForm(){
+    console.log("check form");
+    $("#mctitle").siblings().css('color', 'black');
+    $("#mcdesc").siblings().css('color', 'black');
+    $("#mca").siblings().css('color', 'black');
+    $("#mcb").siblings().css('color', 'black');
+    $("#mcc").siblings().css('color', 'black');
+    $("#mcd").siblings().css('color', 'black');
+    $("#mcans").siblings().css('color', 'black');
+
+    var valid = true;
+    if($("#mctitle").val() == ""){
+      valid = false;
+      $("#mctitle").siblings().css('color', 'red');
+    }
+    if($("#mcdesc").val() == ""){
+      valid = false;
+      $("#mcdesc").siblings().css('color', 'red');
+    }
+    if($("#mca").val() == ""){
+      valid = false;
+      $("#mca").siblings().css('color', 'red');
+    }
+    if($("#mcb").val() == ""){
+      valid = false;
+      $("#mcb").siblings().css('color', 'red');
+    }
+    if($("#mcc").val() == ""){
+      valid = false;
+      $("#mcc").siblings().css('color', 'red');
+    }
+    if($("#mcd").val() == ""){
+      valid = false;
+      $("#mcd").siblings().css('color', 'red');
+    }
+    if($("#mcans").val() == ""){
+      valid = false;
+      $("#mcans").siblings().css('color', 'red');
+    }
+    if(!($("#mcans").val() == $("#mca").val()
+        || $("#mcans").val() == $("#mcb").val()
+        || $("#mcans").val() == $("#mcc").val()
+        || $("#mcans").val() == $("#mcd").val())){
+      valid = false;
+      $("#mcans").siblings().css('color', 'red');
+    }
+    return valid;
+  }
+
+  $scope.addmc = function(){
+    console.log("add mc question");
+    var data = {
+      Creator: $("#mccreator").val(),
+      Title: $("#mctitle").val(),
+      Description: $("#mcdesc").val(),
+      A: $("#mca").val(),
+      B: $("#mcb").val(),
+      C: $("#mcc").val(),
+      D: $("#mcd").val(),
+      Answer: $("#mcans").val(),
+      Tags: $("#mctag").val()
+    };
+    if(checkForm()){
+      $http.post('/addmc',data).success(function(response){
+        console.log(response);
+        $("#exampleModal").modal('hide');
+        $("#exampleModal").find("input, textarea").val("");
+        $("#mccreator").val($scope.user);
+        refresh();
+      });
+    }
+    else{
+      console.log("cant send");
+    }
+
   };
 
 });

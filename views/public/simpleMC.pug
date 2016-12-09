@@ -13,25 +13,34 @@ block content
         thead
           tr
             th ID
-            th Creator
             th Title
             th Description
             th A
             th B
             th C
             th D
+            th Answer
             th Tags
-          tr(ng-repeat='mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag}) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize')
-            td {{$index+1}}
-            td {{mc.Creator}}
+            th Creator
+            th LMT
+            th Action
+          tr(ng-repeat='mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag} ) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize')
+            //- td {{$index+1}}
+            th {{mc._id}}
             td {{mc.Title}}
             td {{mc.Description}}
             td {{mc.A}}
             td {{mc.B}}
             td {{mc.C}}
             td {{mc.D}}
+            td {{mc.Answer}}
             td {{mc.Tags}}
+            td {{mc.Creator}}
+            td {{mc.LastModfiedTime}}
+            td
+              a.btn.btn-warning(ng-href='/{{mc._id}}', role='button') Detail
       div
         ul(uib-pagination='', total-items='filterMC.length', ng-model='currentPage', items-per-page='pageSize')
 
 block scriptcontent
+  script(src='js/simpleViewmcCtrl.js')
