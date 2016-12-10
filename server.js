@@ -70,6 +70,15 @@ app.get('/getonemc/:id', function(req, res){
   });
 });
 
+// delete one mc from detail page
+app.delete('/deleteMC/:id',function(req, res){
+    var id = req.params.id;
+    console.log(id);
+    model.Mc.remove({_id: id}, function(err, items){
+      res.json(items);
+    });
+});
+
 // delete one mc
 app.delete('/delete/:id',function(req, res){
     var id = req.params.id;
@@ -220,7 +229,36 @@ app.get('/', function (req, res) {
 app.get('/:id', function(req, res){
   console.log("go to detail page");
   var id = req.params.id;
-  res.render('private/detailMCforprivate', {id: id});
+
+  var username;
+  if(req.cookies.token != undefined){
+    console.log("have cookie");
+    var token = req.cookies.token;
+    var decoded = jwt.decode(token, JWT_SECRET);
+    model.User.findOne(
+      {username: decoded['userid'], password: decoded['passwd']},
+      function(err, user){
+        if(err){
+          console.log("err in find user: go to public index");
+          res.render('public/detailMC', {user: username, id: id});
+        }
+        if(user == null){
+          console.log("user not found: go to public index");
+          res.render('public/detailMC', {user: username, id: id});
+        }
+        else{
+          console.log("find user: go to private index");
+          username = decoded['userid'];
+          res.render('private/detailMCforprivate', {user: username, id: id});
+        }
+    });
+  }
+  else{
+    console.log("no cookie: go to public index");
+    res.render('public/detailMC', {user: username, id: id});
+  }
+
+  // res.render('private/detailMCforprivate', {id: id});
 });
 
 app.listen(8080);

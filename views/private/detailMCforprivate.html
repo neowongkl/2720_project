@@ -1,34 +1,64 @@
 <div ng-controller="detailmcCtrl">
   <div class="container">
     <div>
-      QuestionID: {{mc._id}}
+      <label>QuestionID:</label>
+      <label>{{mc._id}}</label>
     </div>
     <div>
-      Title: {{mc.Title}}
+      <label>Title:</label>
+      <label ng-if="!isEditing">{{mc.Title}}</label>
+      <input ng-if="isEditing" type="text" class="form-control" id="mctitle" ng-value="mc.Title">
     </div>
     <div>
-      Description: {{mc.Description}}
+      <label>Description:</label>
+      <label ng-if="!isEditing">{{mc.Description}}</label>
+      <textarea ng-if="isEditing" class="form-control" id="mcdesc" ng-value="mc.Description"></textarea>
     </div>
     <div>
-      A: {{mc.A}}
+      <label>A:</label>
+      <label ng-if="!isEditing">{{mc.A}}</label>
+      <input ng-if="isEditing" type="text" class="form-control" id="mca" ng-value="mc.A">
     </div>
     <div>
-      B: {{mc.B}}
+      <label>B:</label>
+      <label ng-if="!isEditing">{{mc.B}}</label>
+      <input ng-if="isEditing" type="text" class="form-control" id="mcb" ng-value="mc.B">
     </div>
     <div>
-      C: {{mc.C}}
+      <label>C:</label>
+      <label ng-if="!isEditing">{{mc.C}}</label>
+      <input ng-if="isEditing" type="text" class="form-control" id="mcc" ng-value="mc.C">
     </div>
     <div>
-      Answer: {{mc.Answer}}
+      <label>D:</label>
+      <label ng-if="!isEditing">{{mc.D}}</label>
+      <input ng-if="isEditing" type="text" class="form-control" id="mcd" ng-value="mc.D">
     </div>
     <div>
-      Tags: {{mc.Tags}}
+      <label>Answer:</label>
+      <label ng-if="!isEditing">{{mc.Answer}}</label>
+      <input ng-if="isEditing" type="text" class="form-control" id="mcans" ng-value="mc.Answer">
     </div>
     <div>
-      Creator: {{mc.Creator}}
+      <label>Tags:</label>
+      <label>{{mc.Tags}}</label>
+      <textarea ng-if="isEditing" class="form-control" id="mctag" ng-value="mc.Tags"></textarea>
     </div>
     <div>
-      LastModfiedTime: {{mc.LastModfiedTime}}
+      <label>Creator:</label>
+      <label>{{mc.Creator}}</label>
     </div>
+    <div>
+      <label>LastModfiedTime:</label>
+      <label>{{mc.LastModfiedTime}}</label>
+
+    </div>
+  </div>
+  <div ng-if="canEdit" class="container">
+    <button ng-if="!isEditing" class="btn btn-info" ng-click="onEditClick()">Edit</button>
+    <button ng-if="!isEditing" class="btn btn-danger" ng-click="deleteMC()">Delete</button>
+
+    <button ng-if="isEditing" class="btn btn-primary" ng-click="updateMC()">Save</button>
+    <button ng-if="isEditing" class="btn btn-default" ng-click="onCancelClick()">Cancel</button>
   </div>
 </div>
