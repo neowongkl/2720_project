@@ -5,6 +5,11 @@ app.controller("mcCtrl", function($scope, $http){
     $scope.currentPage = 1;
     $scope.mcs;
     $scope.user;
+    $scope.sort = 'Title';
+
+    $scope.setSort = function(value) {
+      $scope.sort = value;
+    }
 
     var refresh = function(){
       $http.get('/getmcs').success(function(response){

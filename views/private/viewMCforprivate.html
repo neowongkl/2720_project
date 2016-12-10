@@ -5,6 +5,12 @@
       <input ng-model="name" type="text" placeholder="Ceator">
       <label>Tag</label>
       <input ng-model="tag" type="text" placeholder="Tag">
+      <label>Order</label>
+      <select ng-model="select_value" ng-change="setSort(select_value)">
+        <option selected disabled value="">Choose here</option>
+        <option value="Creator">Creator</option>
+        <option value="LastModfiedTime">Last Modified Time</option>
+      </select>
     </div>
   </form>
 
@@ -28,7 +34,7 @@
           <th>LMT</th>
           <th>Action</th>
         </tr>
-        <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag} | orderBy:LastModfiedTime:reverse ) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize" ng-cloak>
+        <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name, Tags:tag} | orderBy:sort) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize" ng-cloak>
           <!-- <td>{{$index+1}}</td> -->
           <th>{{mc._id}}
           <td>{{mc.Title}}</td>
