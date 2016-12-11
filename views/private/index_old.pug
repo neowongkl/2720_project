@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+  // start of jumbortron
+  .jumbotron
+    .container
+      h1=title
+      p
+        | This is a web application that can be used to manage multiple choice(MC) question.
+      p
+        a.btn.btn-primary.btn-lg(href='viewMC', role='button') View MC
+  // end of jumbotron
+  // start of groud member and id
+  .container
+    .panel.panel-info
+      // panel heading
+      .panel-heading
+        h3.panel-title
+          a(role='button', data-toggle='collapse', data-target='#memberList')
+            | Group Member
+      // panel body
+      #memberList.panel-collapse.collapse
+        .panel-body
+          .row
+            .col-md-4
+              h2 RYAN, CHAN Ho Yan
+              p SID: 11550xxxxx
+            .col-md-4
+              h2 ANTHONY, WONG Ka Chun
+              p SID: 11550xxxxx
+            .col-md-4
+              h2 NEO, WONG Ka Lam
+              p SID: 11550xxxxx
+          // end of row
+        // end of panel body
+    // end of panel
+  // end of container
+  // end of groud member and id
