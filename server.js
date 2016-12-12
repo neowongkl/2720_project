@@ -29,6 +29,35 @@ app.use('/css', express.static(__dirname + '/public/stylesheets')); // redirect 
 app.use('/js',express.static(__dirname + '/controllers')); //redirect controllers
 app.use('/img',express.static(__dirname + '/public/images')); //redirect controllers
 
+
+app.post('/updatemc/:id', function(req, res){
+  console.log("update mc");
+  var id = req.params.id;
+  var tags = req.body.Tags;
+  if (tags) {
+    tags = tags.match(/[^\s,]+/g);
+    if (tags == null)
+      tags = [];
+  }
+  else
+    tags = [];
+
+  var mc = {
+    Creator: req.body.Creator,
+    Title: req.body.Title,
+    Description: req.body.Description,
+    A: req.body.A,
+    B: req.body.B,
+    C: req.body.C,
+    D: req.body.D,
+    Answer: req.body.Answer,
+    Tags: tags
+  }
+  model.Mc.findByIdAndUpdate(id, mc, function (err, response) {
+    if (err) return handleError(err);
+    res.json(response);
+  });
+});
 // add mc
 app.post('/addmc', function(req, res){
   console.log("add mc");

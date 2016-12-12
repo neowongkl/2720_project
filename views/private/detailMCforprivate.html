@@ -12,7 +12,7 @@
     <div>
       <label>Description:</label>
       <label ng-if="!isEditing">{{mc.Description}}</label>
-      <textarea ng-if="isEditing" class="form-control" id="mcdesc" ng-value="mc.Description"></textarea>
+      <textarea ng-if="isEditing" class="form-control" id="mcdesc">{{mc.Description}}</textarea>
     </div>
     <div>
       <label>A:</label>
@@ -42,7 +42,7 @@
     <div>
       <label>Tags:</label>
       <label>{{mc.Tags}}</label>
-      <textarea ng-if="isEditing" class="form-control" id="mctag" ng-value="mc.Tags"></textarea>
+      <textarea ng-if="isEditing" class="form-control" id="mctag">{{mc.Tags}}</textarea>
     </div>
     <div>
       <label>Creator:</label>
