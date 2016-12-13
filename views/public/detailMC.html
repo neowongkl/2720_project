@@ -1,34 +1,53 @@
 <div ng-controller="detailmcCtrl">
   <div class="container">
     <div>
-      QuestionID: {{mc._id}}
+      <label>QuestionID:</label>
+      <label>{{mc._id}}</label>
     </div>
     <div>
-      Title: {{mc.Title}}
+      <label>Title:</label>
+      <label ng-if="!isEditing">{{mc.Title}}</label>
     </div>
     <div>
-      Description: {{mc.Description}}
+      <label>Description:</label>
+      <!-- <label ng-if="!isEditing">{{mc.Description}}</label> -->
+      <label ng-bind-html="mc.Description"></label>
     </div>
     <div>
-      A: {{mc.A}}
+      <label>A:</label>
+      <!-- <label ng-if="!isEditing" >{{mc.A}}</label> -->
+      <label ng-bind-html="mc.A"></label>
     </div>
     <div>
-      B: {{mc.B}}
+      <label>B:</label>
+      <!-- <label ng-if="!isEditing" >{{mc.B}}</label> -->
+      <label ng-bind-html="mc.B"></label>
     </div>
     <div>
-      C: {{mc.C}}
+      <label>C:</label>
+      <!-- <label ng-if="!isEditing" >{{mc.C}}</label> -->
+      <label ng-bind-html="mc.C"></label>
     </div>
     <div>
-      Answer: {{mc.Answer}}
+      <label>D:</label>
+      <!-- <label ng-if="!isEditing" >{{mc.D}}</label> -->
+      <label ng-bind-html="mc.D"></label>
     </div>
     <div>
-      Tags: {{mc.Tags}}
+      <label>Answer:</label>
+      <label>{{mc.Answer}}</label>
     </div>
     <div>
-      Creator: {{mc.Creator}}
+      <label>Tags:</label>
+      <label>{{mc.Tags}}</label>
     </div>
     <div>
-      LastModfiedTime: {{mc.LastModfiedTime}}
+      <label>Creator:</label>
+      <label>{{mc.Creator}}</label>
+    </div>
+    <div>
+      <label>LastModfiedTime:</label>
+      <label>{{mc.LastModfiedTime}}</label>
     </div>
   </div>
 </div>

@@ -11,27 +11,32 @@
     </div>
     <div>
       <label>Description:</label>
-      <label ng-if="!isEditing">{{mc.Description}}</label>
+      <!-- <label ng-if="!isEditing">{{mc.Description}}</label> -->
+      <label ng-if="!isEditing" ng-bind-html="mc.Description"></label>
       <textarea ng-if="isEditing" class="form-control" id="mcdesc">{{mc.Description}}</textarea>
     </div>
     <div>
       <label>A:</label>
-      <label ng-if="!isEditing">{{mc.A}}</label>
+      <!-- <label ng-if="!isEditing" >{{mc.A}}</label> -->
+      <label ng-if="!isEditing" ng-bind-html="mc.A"></label>
       <input ng-if="isEditing" type="text" class="form-control" id="mca" ng-value="mc.A">
     </div>
     <div>
       <label>B:</label>
-      <label ng-if="!isEditing">{{mc.B}}</label>
+      <!-- <label ng-if="!isEditing" >{{mc.B}}</label> -->
+      <label ng-if="!isEditing" ng-bind-html="mc.B"></label>
       <input ng-if="isEditing" type="text" class="form-control" id="mcb" ng-value="mc.B">
     </div>
     <div>
       <label>C:</label>
-      <label ng-if="!isEditing">{{mc.C}}</label>
+      <!-- <label ng-if="!isEditing" >{{mc.C}}</label> -->
+      <label ng-if="!isEditing" ng-bind-html="mc.C"></label>
       <input ng-if="isEditing" type="text" class="form-control" id="mcc" ng-value="mc.C">
     </div>
     <div>
       <label>D:</label>
-      <label ng-if="!isEditing">{{mc.D}}</label>
+      <!-- <label ng-if="!isEditing" >{{mc.D}}</label> -->
+      <label ng-if="!isEditing" ng-bind-html="mc.D"></label>
       <input ng-if="isEditing" type="text" class="form-control" id="mcd" ng-value="mc.D">
     </div>
     <div>
@@ -51,7 +56,6 @@
     <div>
       <label>LastModfiedTime:</label>
       <label>{{mc.LastModfiedTime}}</label>
-
     </div>
   </div>
   <div ng-if="canEdit" class="container">

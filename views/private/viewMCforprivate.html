@@ -14,11 +14,11 @@
     </div>
   </form>
 
-  <!--  start of modat-->
+  <!--  start of modal-->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Question</button>
   <button class="btn btn-primary"
               ng-csv="getcsv()" csv-header="getHeader()" filename="{{ filename }}"
-              field-separator=",">down</button>
+              field-separator=",">Down MC</button>
 
   <div class="table-responsive">
     <table class="table table-bordered">
@@ -43,11 +43,16 @@
           <td><input type="checkbox" ng-click="addCSV(mc._id)" ng-checked="boxChecked(mc._id)"></td>
           <th>{{mc._id}}
           <td>{{mc.Title}}</td>
-          <td>{{mc.Description}}</td>
+          <!-- <td>{{mc.Description}}</td>
           <td>{{mc.A}}</td>
           <td>{{mc.B}}</td>
           <td>{{mc.C}}</td>
-          <td>{{mc.D}}</td>
+          <td>{{mc.D}}</td> -->
+          <td ng-bind-html="mc.Description"></td>
+          <td ng-bind-html="mc.A"></td>
+          <td ng-bind-html="mc.B"></td>
+          <td ng-bind-html="mc.C"></td>
+          <td ng-bind-html="mc.D"></td>
           <td>{{mc.Answer}}</td>
           <td>{{mc.Tags}}</td>
           <td>{{mc.Creator}}</td>

@@ -8,10 +8,13 @@ block content
         input(ng-model='name', type='text', placeholder='Ceator')
         label Tag
         input(ng-model='tag', type='text', placeholder='Tag')
+
+    button.btn.btn-primary(ng-csv='getcsv()', csv-header='getHeader()', filename='{{ filename }}', field-separator=',') Down MC
     .table-responsive
       table.table.table-bordered
         thead
           tr
+            th #
             th ID
             th Title
             th Description
@@ -26,13 +29,20 @@ block content
             th Action
           tr(ng-repeat='mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag} ) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize')
             //- td {{$index+1}}
+            th
+              input(type='checkbox', ng-click='addCSV(mc._id)', ng-checked='boxChecked(mc._id)')
             th {{mc._id}}
             td {{mc.Title}}
-            td {{mc.Description}}
-            td {{mc.A}}
-            td {{mc.B}}
-            td {{mc.C}}
-            td {{mc.D}}
+            //- td {{mc.Description}}
+            //- td {{mc.A}}
+            //- td {{mc.B}}
+            //- td {{mc.C}}
+            //- td {{mc.D}}
+            td(ng-bind-html='mc.Description')
+            td(ng-bind-html='mc.A')
+            td(ng-bind-html='mc.B')
+            td(ng-bind-html='mc.C')
+            td(ng-bind-html='mc.D')
             td {{mc.Answer}}
             td {{mc.Tags}}
             td {{mc.Creator}}
