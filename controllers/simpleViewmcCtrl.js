@@ -6,6 +6,7 @@ app.controller("mcCtrl", function($scope, $http){
     $scope.mcs;
     $scope.user;
     $scope.sort = 'Title';
+    $scope.csv = [];
 
     $scope.setSort = function(value) {
       $scope.sort = value;
@@ -123,6 +124,70 @@ app.controller("mcCtrl", function($scope, $http){
     }
 
   };
+
+  function addMCById(id){
+    var mcs = $scope.mcs;
+    for(var i = 0 ; i < mcs.length ; i++){
+      if(mcs[i]._id === id){
+        return mcs[i];
+      }
+    }
+  };
+
+  function delMCById(id){
+    var csv = $scope.csv;
+    for(var i = 0 ; i < csv.length ; i++){
+      if(csv[i]._id === id){
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  $scope.addCSV = function(id){
+    console.log("add csv");
+    console.log(id);
+    var temp;
+    if( (temp = delMCById(id)) != -1){
+      $scope.scv = $scope.csv.splice(temp,1);
+    }
+    else{
+      var temp = addMCById(id);
+      $scope.csv.push(temp);
+    }
+
+    console.log($scope.csv);
+
+  };
+
+  $scope.boxChecked = function(id){
+    console.log("box checked");
+    if( (temp = delMCById(id)) != -1){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  };
+
+  $scope.filename = "test";
+  $scope.getcsv = function(){
+    console.log("get csv");
+    for(var i = 0 ; i < $scope.csv.length; i++){
+      delete $scope.csv[i].__v;
+    }
+    return $scope.csv;
+  };
+  $scope.getHeader = function (){
+    return ["QuestionID", "Title", "Description",
+            "A", "B", "C", "D",
+            "Answer", "Creator", "LMT",
+            "Tags"
+            ]
+  };
+
+
 
 });
 

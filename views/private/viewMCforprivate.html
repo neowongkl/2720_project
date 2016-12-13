@@ -16,11 +16,15 @@
 
   <!--  start of modat-->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Question</button>
+  <button class="btn btn-primary"
+              ng-csv="getcsv()" csv-header="getHeader()" filename="{{ filename }}"
+              field-separator=",">down</button>
 
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>#</th>
           <th>ID</th>
           <th>Title</th>
           <th>Description</th>
@@ -36,6 +40,7 @@
         </tr>
         <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name, Tags:tag} | orderBy:sort) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize" ng-cloak>
           <!-- <td>{{$index+1}}</td> -->
+          <td><input type="checkbox" ng-click="addCSV(mc._id)" ng-checked="boxChecked(mc._id)"></td>
           <th>{{mc._id}}
           <td>{{mc.Title}}</td>
           <td>{{mc.Description}}</td>
