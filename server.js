@@ -27,6 +27,7 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redi
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/css', express.static(__dirname + '/public/stylesheets')); // redirect CSS bootstrap
 app.use('/js',express.static(__dirname + '/controllers')); //redirect controllers
+app.use('/js',express.static(__dirname + '/public/js')); //redirect controllers
 app.use('/img',express.static(__dirname + '/public/images')); //redirect controllers
 
 

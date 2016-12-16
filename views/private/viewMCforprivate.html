@@ -1,59 +1,76 @@
-<div ng-controller="mcCtrl" class="container-fluid" style="padding-top:50px;">
-  <form class="form-inline">
-    <div class="form-group">
-      <label>Creator</label>
-      <input ng-model="name" type="text" placeholder="Ceator">
-      <label>Tag</label>
-      <input ng-model="tag" type="text" placeholder="Tag">
-      <label>Order</label>
-      <select ng-model="select_value" ng-change="setSort(select_value)">
-        <option selected disabled value="">Choose here</option>
-        <option value="Creator">Creator</option>
-        <option value="LastModfiedTime">Last Modified Time</option>
-      </select>
+<div ng-controller="mcCtrl" class="container view">
+
+  <!-- Title -->
+  <div class="section-title-wrap text-center">
+    <div class="section-icon">
+      <span class="glyphicon glyphicon-tasks"></span>
     </div>
-  </form>
+    <h2 class="section-title"> MC Post</h2>
+    <p class="section-subtitle">Manage and view mc <span>here</span></p>
+  </div>
 
   <!--  start of modal-->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Question</button>
-  <button class="btn btn-primary"
-              ng-csv="getcsv()" csv-header="getHeader()" filename="{{ filename }}"
-              field-separator=",">Down MC</button>
+  <div class="dropdown text-right float-right">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+      <span class="glyphicon glyphicon-menu-hamburger"></span>
+    </button>
+    <ul class="dropdown-menu text-right">
+      <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Question</button></li>
+      <li><button class="btn btn-primary"
+                  ng-csv="getcsv()" csv-header="getHeader()" filename="{{ filename }}"
+                  field-separator=",">Down MC</button></li>
+    </ul>
+  </div>
+
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#search">
+    <span class="glyphicon glyphicon-search"></span>
+  </button>
+  <div id="search" class="collapse clooapse-bar">
+    <form class="form-inline">
+      <div class="form-group">
+        <label>Creator: </label>
+        <input ng-model="name" type="text" placeholder="Ceator">
+        <label>Tag: </label>
+        <input ng-model="tag" type="text" placeholder="Tag">
+        <label>Order</label>
+        <select ng-model="select_value" ng-change="setSort(select_value)">
+          <option selected disabled value="">Choose here</option>
+          <option value="Creator">Creator</option>
+          <option value="LastModfiedTime">Last Modified Time</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
 
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>
-          <th>ID</th>
+          <!-- <th>ID</th> -->
           <th>Title</th>
           <th>Description</th>
-          <th>A</th>
+          <!-- <th>A</th>
           <th>B</th>
           <th>C</th>
-          <th>D</th>
-          <th>Answer</th>
+          <th>D</th> -->
+          <!-- <th>Answer</th> -->
           <th>Tags</th>
           <th>Creator</th>
           <th>LMT</th>
           <th>Action</th>
         </tr>
         <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name, Tags:tag} | orderBy:sort) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize" ng-cloak>
-          <!-- <td>{{$index+1}}</td> -->
           <td><input type="checkbox" ng-click="addCSV(mc._id)" ng-checked="boxChecked(mc._id)"></td>
-          <th>{{mc._id}}
+          <!-- <th>{{mc._id}} -->
           <td>{{mc.Title}}</td>
-          <!-- <td>{{mc.Description}}</td>
-          <td>{{mc.A}}</td>
-          <td>{{mc.B}}</td>
-          <td>{{mc.C}}</td>
-          <td>{{mc.D}}</td> -->
           <td ng-bind-html="mc.Description"></td>
-          <td ng-bind-html="mc.A"></td>
+          <!-- <td ng-bind-html="mc.A"></td>
           <td ng-bind-html="mc.B"></td>
           <td ng-bind-html="mc.C"></td>
-          <td ng-bind-html="mc.D"></td>
-          <td>{{mc.Answer}}</td>
+          <td ng-bind-html="mc.D"></td> -->
+          <!-- <td>{{mc.Answer}}</td> -->
           <td>{{mc.Tags}}</td>
           <td>{{mc.Creator}}</td>
           <td>{{mc.LastModfiedTime}}</td>
@@ -64,7 +81,7 @@
         </tr>
       </thead>
     </table>
-    <div>
+    <div class="text-center">
       <ul uib-pagination total-items="filterMC.length" ng-model="currentPage" items-per-page="pageSize"></ul>
     </div>
   </div>

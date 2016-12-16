@@ -16,7 +16,7 @@ body {
 
 		.form-group {
 			margin-right: 10px;
-			
+
 			.form-control {
 				border-radius: 25px;
 	    	background-color: transparent;
@@ -24,7 +24,7 @@ body {
 		}
 	}
 
-	.background {
+	.main {
 		height: 100%;
 
 		.carousel {
@@ -37,7 +37,7 @@ body {
 					height: 100%;
 
 					.carousel-caption {
-						top: 40%;
+						top: 35%;
 						bottom: inherit;
 
 						h3 {
@@ -51,12 +51,108 @@ body {
 						}
 					}
 
-					img {
-						width: 100%;
-						height: 100%;
-					}
 				}
 			}
 		}
 	}
+}
+
+.affix {
+	background-color: rgba(16, 20, 23, 0.9);
+}
+
+.header-1 {
+	height: 100vh;
+	background: url(http://zakirinfo.com/cross/img/bg11.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.header-2 {
+	height: 100vh;
+	background: url(/img/background3.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.over-bg{
+	height: 100%;
+	background: rgba(1, 3, 7, 0.6);
+
+	.intro-wrap{
+		position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+	}
+}
+
+.view {
+	padding-top:80px;
+
+	.section-title-wrap {
+		margin-top: 30px;
+		margin-bottom: 60px;
+	}
+}
+
+.into-title {
+  font-size: 52px;
+  line-height: 75px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.into-description {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.into-button-container {
+    margin-top: 50px;
+}
+
+.text-white{
+	color: #fff;
+
+	&:focus{
+		color: #fff;
+	}
+}
+
+.section-title {
+	line-height: 30px;
+	letter-spacing: -1px;
+	font-weight: 700;
+	margin-bottom: 24px;
+}
+
+.section-icon {
+	color: #ff4207;
+
+	span {
+		font-size: 35px;
+		vertical-align: middle;
+		color: #ff4207;
+	}
+}
+
+.section-subtitle {
+    font-size: 16px;
+    line-height: 24px;
+    color: #333;
+
+		span {
+			color: #ff5722;
+		}
+}
+
+.float-right{
+	float: right
+}
+
+.clooapse-bar {
+	// line-height: 50px;
 }

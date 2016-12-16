@@ -19,13 +19,13 @@ html
           if !user
             form.navbar-form.navbar-right(action="/login", method="post")
               .form-group
-                input.form-control(type='text', ng-model='$parent.userData.userid', placeholder='Username', name='userid')
+                input.form-control.text-white(type='text', ng-model='$parent.userData.userid', placeholder='Username', name='userid')
               .form-group
-                input.form-control(type='password', ng-model='$parent.userData.passwd', placeholder='Password', name='passwd')
+                input.form-control.text-white(type='password', ng-model='$parent.userData.passwd', placeholder='Password', name='passwd')
               button.btn.btn-success(type="submit" value="Submit") Sign in
           else
-            <a class="btn btn-danger navbar-btn navbar-right" href="/logout" role="button">Logout</a>
-            p.navbar-text.navbar-right Signed in as #{user}&nbsp;&nbsp;
+            a.btn.btn-danger.navbar-btn.navbar-right(href='/logout', role='button') Logout
+            p.navbar-text.navbar-right.text-white Signed in as #{user}&nbsp;&nbsp;
         // /.navbar-collapse
       // end nav bar
     block content

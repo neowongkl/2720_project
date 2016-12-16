@@ -1,0 +1,52 @@
+<div class="background">
+  <img src="img/cover1.jpg">
+</div>
+<div ng-controller="mcCtrl" class="container mc">
+  <div class="jumbotron">
+    <form class="form-inline">
+      <div class="form-group">
+        <label>Creator</label>
+        <input ng-model="name" type="text" placeholder="Ceator"/>
+        <label>Tag</label>
+        <input ng-model="tag" type="text" placeholder="Tag"/>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>Answer</th>
+            <th>Tags</th>
+            <th>Creator</th>
+            <th>LMT</th>
+            <th>Action</th>
+          </tr>
+          <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag} ) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize">
+            <th>{{mc._id}}</th>
+            <td>{{mc.Title}}</td>
+            <td>{{mc.Description}}</td>
+            <td>{{mc.A}}</td>
+            <td>{{mc.B}}</td>
+            <td>{{mc.C}}</td>
+            <td>{{mc.D}}</td>
+            <td>{{mc.Answer}}</td>
+            <td>{{mc.Tags}}</td>
+            <td>{{mc.Creator}}</td>
+            <td>{{mc.LastModfiedTime}}</td>
+            <td><a ng-href="/{{mc._id}}" role="button" class="btn btn-warning">Detail</a></td>
+          </tr>
+        </thead>
+      </table>
+      <div class="text-center">
+        <ul uib-pagination="" total-items="filterMC.length" ng-model="currentPage" items-per-page="pageSize"></ul>
+      </div>
+    </div>
+  </div>
+</div>
