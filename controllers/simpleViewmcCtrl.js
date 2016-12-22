@@ -8,6 +8,15 @@ app.controller("mcCtrl", function($scope, $http){
     $scope.sort = 'Title';
     $scope.csv = [];
 
+    $scope.isLast = function(check) {
+      console.log("check");
+      console.log(check);
+      if (check == true) {
+        return true;
+      }
+      return false;
+    };
+
     var setSort = function(value) {
       console.log(value);
       $scope.sort = value;
@@ -15,7 +24,6 @@ app.controller("mcCtrl", function($scope, $http){
     }
 
     $('ul.select-clone li').click(function() {
-      console.log("hihi");
       setSort($(this).attr('data-value'));
     })
 

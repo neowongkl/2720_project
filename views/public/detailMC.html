@@ -1,6 +1,10 @@
 <div ng-controller="detailmcCtrl" class="view">
   <div class="container">
     <div class="mc-detail">
+      <div class="text-left float-left">
+        <label>Tags:</label><br>
+        <span class="label label-warning" ng-repeat="tag in mc.Tags" style="margin-right: 5px;">{{tag}}</span>
+      </div>
       <div class="text-right">
         <label>Creator:</label>
         <label>{{mc.Creator}}</label>
@@ -54,11 +58,6 @@
         </div>
       </div>
 
-      <div>
-        <label>Tags:</label>
-        <label>{{mc.Tags}}</label>
-        <textarea ng-if="isEditing" class="form-control" id="mctag">{{mc.Tags}}</textarea>
-      </div>
     </div>
   </div>
 </div>

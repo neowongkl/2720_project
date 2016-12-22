@@ -1,6 +1,10 @@
 <div ng-controller="detailmcCtrl" class="view">
   <div class="container">
     <div class="mc-detail">
+      <div class="text-left float-left">
+        <label>Tags:</label><br>
+        <span class="label label-warning" ng-repeat="tag in mc.Tags" style="margin-right: 5px;" ng-if="!isEditing">{{tag}}</span>
+      </div>
       <div class="text-right">
         <label>Creator:</label>
         <label>{{mc.Creator}}</label>
@@ -9,6 +13,8 @@
         <label>Last Modfied Time:</label>
         <label>{{mc.LastModfiedTime}}</label>
       </div>
+      <textarea ng-if="isEditing" ng-model="mc.Tags" class="form-control" id="mctag">
+      </textarea>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">QuestionID: {{mc._id}}</h3>
@@ -67,12 +73,6 @@
           <button ng-if="isEditing" class="btn btn-primary" ng-click="updateMC()">Save</button>
           <button ng-if="isEditing" class="btn btn-default" ng-click="onCancelClick()">Cancel</button>
         </div>
-      </div>
-
-      <div>
-        <label>Tags:</label>
-        <label>{{mc.Tags}}</label>
-        <textarea ng-if="isEditing" class="form-control" id="mctag">{{mc.Tags}}</textarea>
       </div>
     </div>
   </div>
