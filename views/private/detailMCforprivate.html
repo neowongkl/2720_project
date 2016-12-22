@@ -1,68 +1,79 @@
-<div ng-controller="detailmcCtrl">
+<div ng-controller="detailmcCtrl" class="view">
   <div class="container">
-    <div>
-      <label>QuestionID:</label>
-      <label>{{mc._id}}</label>
-    </div>
-    <div>
-      <label>Title:</label>
-      <label ng-if="!isEditing">{{mc.Title}}</label>
-      <input ng-if="isEditing" type="text" class="form-control" id="mctitle" ng-value="mc.Title">
-    </div>
-    <div>
-      <label>Description:</label>
-      <!-- <label ng-if="!isEditing">{{mc.Description}}</label> -->
-      <label ng-if="!isEditing" ng-bind-html="mc.Description"></label>
-      <textarea ng-if="isEditing" class="form-control" id="mcdesc">{{mc.Description}}</textarea>
-    </div>
-    <div>
-      <label>A:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.A}}</label> -->
-      <label ng-if="!isEditing" ng-bind-html="mc.A"></label>
-      <input ng-if="isEditing" type="text" class="form-control" id="mca" ng-value="mc.A">
-    </div>
-    <div>
-      <label>B:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.B}}</label> -->
-      <label ng-if="!isEditing" ng-bind-html="mc.B"></label>
-      <input ng-if="isEditing" type="text" class="form-control" id="mcb" ng-value="mc.B">
-    </div>
-    <div>
-      <label>C:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.C}}</label> -->
-      <label ng-if="!isEditing" ng-bind-html="mc.C"></label>
-      <input ng-if="isEditing" type="text" class="form-control" id="mcc" ng-value="mc.C">
-    </div>
-    <div>
-      <label>D:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.D}}</label> -->
-      <label ng-if="!isEditing" ng-bind-html="mc.D"></label>
-      <input ng-if="isEditing" type="text" class="form-control" id="mcd" ng-value="mc.D">
-    </div>
-    <div>
-      <label>Answer:</label>
-      <label ng-if="!isEditing">{{mc.Answer}}</label>
-      <input ng-if="isEditing" type="text" class="form-control" id="mcans" ng-value="mc.Answer">
-    </div>
-    <div>
-      <label>Tags:</label>
-      <label>{{mc.Tags}}</label>
-      <textarea ng-if="isEditing" class="form-control" id="mctag">{{mc.Tags}}</textarea>
-    </div>
-    <div>
-      <label>Creator:</label>
-      <label>{{mc.Creator}}</label>
-    </div>
-    <div>
-      <label>LastModfiedTime:</label>
-      <label>{{mc.LastModfiedTime}}</label>
-    </div>
-  </div>
-  <div ng-if="canEdit" class="container">
-    <button ng-if="!isEditing" class="btn btn-info" ng-click="onEditClick()">Edit</button>
-    <button ng-if="!isEditing" class="btn btn-danger" ng-click="deleteMC()">Delete</button>
+    <div class="mc-detail">
+      <div class="text-right">
+        <label>Creator:</label>
+        <label>{{mc.Creator}}</label>
+      </div>
+      <div class="text-right">
+        <label>Last Modfied Time:</label>
+        <label>{{mc.LastModfiedTime}}</label>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">QuestionID: {{mc._id}}</h3>
+        </div>
+        <div class="panel-body">
+          <label class="panel-title inline-block"> Title: </label>
+          <label class="panel-title" ng-if="!isEditing">{{mc.Title}}</label>
+          <input ng-if="isEditing" type="text" class="form-control" id="mctitle" ng-value="mc.Title"></input>
+          <br>
+          <label>Description:</label>
+          <label ng-if="!isEditing" ng-bind-html="mc.Description"></label>
+          <textarea ng-if="isEditing" class="form-control" id="mcdesc">{{mc.Description}}</textarea>
+        </div>
+      </div>
 
-    <button ng-if="isEditing" class="btn btn-primary" ng-click="updateMC()">Save</button>
-    <button ng-if="isEditing" class="btn btn-default" ng-click="onCancelClick()">Cancel</button>
+      <div class="text-center">
+        <div class="col-md-6">
+          <div class="choice">
+            <label>A:</label>
+            <label ng-if="!isEditing" ng-bind-html="mc.A"></label>
+            <input ng-if="isEditing" type="text" class="form-control" id="mca" ng-value="mc.A">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="choice">
+            <label>B:</label>
+            <label ng-if="!isEditing" ng-bind-html="mc.B"></label>
+            <input ng-if="isEditing" type="text" class="form-control" id="mcb" ng-value="mc.B">
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+          <div class="choice">
+            <label>C:</label>
+            <label ng-if="!isEditing" ng-bind-html="mc.C"></label>
+            <input ng-if="isEditing" type="text" class="form-control" id="mcc" ng-value="mc.C">
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+          <div class="choice">
+            <label>D:</label>
+            <label ng-if="!isEditing" ng-bind-html="mc.D"></label>
+            <input ng-if="isEditing" type="text" class="form-control" id="mcd" ng-value="mc.D">
+          </div>
+        </div>
+
+        <div class="col-md-12 section-answer">
+          <label>Answer:</label>
+          <label ng-if="!isEditing">{{mc.Answer}}</label>
+          <input ng-if="isEditing" type="text" class="form-control" id="mcans" ng-value="mc.Answer">
+        </div>
+
+        <div ng-if="canEdit" class="col-md-12 text-center">
+          <button ng-if="!isEditing" class="btn btn-info" ng-click="onEditClick()">Edit</button>
+          <button ng-if="!isEditing" class="btn btn-danger" ng-click="deleteMC()">Delete</button>
+
+          <button ng-if="isEditing" class="btn btn-primary" ng-click="updateMC()">Save</button>
+          <button ng-if="isEditing" class="btn btn-default" ng-click="onCancelClick()">Cancel</button>
+        </div>
+      </div>
+
+      <div>
+        <label>Tags:</label>
+        <label>{{mc.Tags}}</label>
+        <textarea ng-if="isEditing" class="form-control" id="mctag">{{mc.Tags}}</textarea>
+      </div>
+    </div>
   </div>
 </div>

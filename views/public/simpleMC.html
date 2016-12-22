@@ -1,21 +1,38 @@
-<div class="background">
-  <img src="img/cover1.jpg">
-</div>
-<div ng-controller="mcCtrl" class="container mc">
-  <div class="jumbotron">
-    <form class="form-inline">
-      <div class="form-group">
-        <label>Creator</label>
-        <input ng-model="name" type="text" placeholder="Ceator"/>
-        <label>Tag</label>
-        <input ng-model="tag" type="text" placeholder="Tag"/>
+<div ng-controller="mcCtrl" class="view mc">
+  <div class="search-bar">
+    <form class="">
+      <div class="container">
+        <div class="search-value text-center">
+          <div class="creator" style="display:inline-block;">
+            <input ng-model="name" type="text" placeholder="Ceator"></input>
+          </div>
+          <div class="tag" style="display:inline-block;">
+            <input ng-model="tag" type="text" placeholder="Tag">
+          </div>
+          <div class="select-filter" style="display:inline-block;">
+            <select ng-model="select_value" ng-change="setSort(select_value)" data-placeholder="-Select filter-">
+              <option value="Creator">Creator</option>
+              <option value="LastModfiedTime">Last Modified Time</option>
+            </select>
+          </div>
+        </div>
       </div>
     </form>
+  </div>
+  <div class="container">
+    <!-- Title -->
+    <div class="section-title-wrap text-center">
+      <div class="section-icon">
+        <span class="glyphicon glyphicon-tasks"></span>
+      </div>
+      <h2 class="section-title"> MC Post</h2>
+      <p class="section-subtitle">Manage and view mc <span>here</span></p>
+    </div>
+
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Title</th>
             <th>Description</th>
             <th>A</th>
@@ -28,8 +45,7 @@
             <th>LMT</th>
             <th>Action</th>
           </tr>
-          <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name} | filter:{Tags:tag} ) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize">
-            <th>{{mc._id}}</th>
+          <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name, Tags:tag} | orderBy:sort) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize">
             <td>{{mc.Title}}</td>
             <td>{{mc.Description}}</td>
             <td>{{mc.A}}</td>

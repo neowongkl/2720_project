@@ -8,9 +8,16 @@ app.controller("mcCtrl", function($scope, $http){
     $scope.sort = 'Title';
     $scope.csv = [];
 
-    $scope.setSort = function(value) {
+    var setSort = function(value) {
+      console.log(value);
       $scope.sort = value;
+      refresh();
     }
+
+    $('ul.select-clone li').click(function() {
+      console.log("hihi");
+      setSort($(this).attr('data-value'));
+    })
 
     var refresh = function(){
       $http.get('/getmcs').success(function(response){

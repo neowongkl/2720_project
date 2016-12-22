@@ -1,142 +1,146 @@
-<div ng-controller="mcCtrl" class="container view">
+<div ng-controller="mcCtrl" class="view">
 
-  <!-- Title -->
-  <div class="section-title-wrap text-center">
-    <div class="section-icon">
-      <span class="glyphicon glyphicon-tasks"></span>
-    </div>
-    <h2 class="section-title"> MC Post</h2>
-    <p class="section-subtitle">Manage and view mc <span>here</span></p>
-  </div>
-
-  <!--  start of modal-->
-  <div class="dropdown text-right float-right">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-      <span class="glyphicon glyphicon-menu-hamburger"></span>
-    </button>
-    <ul class="dropdown-menu text-right">
-      <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Question</button></li>
-      <li><button class="btn btn-primary"
-                  ng-csv="getcsv()" csv-header="getHeader()" filename="{{ filename }}"
-                  field-separator=",">Down MC</button></li>
-    </ul>
-  </div>
-
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#search">
-    <span class="glyphicon glyphicon-search"></span>
-  </button>
-  <div id="search" class="collapse clooapse-bar">
-    <form class="form-inline">
-      <div class="form-group">
-        <label>Creator: </label>
-        <input ng-model="name" type="text" placeholder="Ceator">
-        <label>Tag: </label>
-        <input ng-model="tag" type="text" placeholder="Tag">
-        <label>Order</label>
-        <select ng-model="select_value" ng-change="setSort(select_value)">
-          <option selected disabled value="">Choose here</option>
-          <option value="Creator">Creator</option>
-          <option value="LastModfiedTime">Last Modified Time</option>
-        </select>
+  <div class="search-bar">
+    <form class="">
+      <div class="search-toggle" style="display: none;">
+        <div class="container text-center">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
+            <span class="	glyphicon glyphicon-plus"></span>
+              Add Questions
+          </button>
+          <button class="btn btn-default" ng-csv="getcsv()" csv-header="getHeader()" filename="{{ filename }}" field-separator=",">
+            <span class="glyphicon glyphicon-save"></span>
+            Download MC
+          </button>
+        </div>
+      </div>
+      <div class="container">
+        <button class="toggle-btn">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+        <div class="search-value">
+          <div class="creator" style="float: left;">
+            <input ng-model="name" type="text" placeholder="Ceator"></input>
+          </div>
+          <div class="tag" style="float: left;">
+            <input ng-model="tag" type="text" placeholder="Tag">
+          </div>
+          <div class="select-filter" style="float: left;">
+            <select ng-model="select_value" ng-change="setSort(select_value)" data-placeholder="-Select filter-">
+              <option value="Creator">Creator</option>
+              <option value="LastModfiedTime">Last Modified Time</option>
+            </select>
+          </div>
+        </div>
       </div>
     </form>
   </div>
 
-
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <!-- <th>ID</th> -->
-          <th>Title</th>
-          <th>Description</th>
-          <!-- <th>A</th>
-          <th>B</th>
-          <th>C</th>
-          <th>D</th> -->
-          <!-- <th>Answer</th> -->
-          <th>Tags</th>
-          <th>Creator</th>
-          <th>LMT</th>
-          <th>Action</th>
-        </tr>
-        <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name, Tags:tag} | orderBy:sort) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize" ng-cloak>
-          <td><input type="checkbox" ng-click="addCSV(mc._id)" ng-checked="boxChecked(mc._id)"></td>
-          <!-- <th>{{mc._id}} -->
-          <td>{{mc.Title}}</td>
-          <td ng-bind-html="mc.Description"></td>
-          <!-- <td ng-bind-html="mc.A"></td>
-          <td ng-bind-html="mc.B"></td>
-          <td ng-bind-html="mc.C"></td>
-          <td ng-bind-html="mc.D"></td> -->
-          <!-- <td>{{mc.Answer}}</td> -->
-          <td>{{mc.Tags}}</td>
-          <td>{{mc.Creator}}</td>
-          <td>{{mc.LastModfiedTime}}</td>
-          <td>
-            <button ng-if="canRemove(mc.Creator)" class="btn btn-danger" ng-click="remove(mc._id)">Remove</button>
-            <a class="btn btn-warning" ng-href="/{{mc._id}}" role="button">Detail</a>
-          </td>
-        </tr>
-      </thead>
-    </table>
-    <div class="text-center">
-      <ul uib-pagination total-items="filterMC.length" ng-model="currentPage" items-per-page="pageSize"></ul>
+  <div class="container">
+    <!-- Title -->
+    <div class="section-title-wrap text-center">
+      <div class="section-icon">
+        <span class="glyphicon glyphicon-tasks"></span>
+      </div>
+      <h2 class="section-title"> MC Post</h2>
+      <p class="section-subtitle">Manage and view mc <span>here</span></p>
     </div>
-  </div>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="mccreator" class="control-label">Creator:</label>
-              <input type="text" class="form-control" id="mccreator" ng-value="user" disabled>
-            </div>
-            <div class="form-group">
-              <label for="mctitle" class="control-label">Title:</label>
-              <input type="text" class="form-control" id="mctitle">
-            </div>
-            <div class="form-group">
-              <label for="mcdesc" class="control-label">Description:</label>
-              <textarea class="form-control" id="mcdesc"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="mca" class="control-label">Answer A:</label>
-              <input type="text" class="form-control" id="mca">
-            </div>
-            <div class="form-group">
-              <label for="mcb" class="control-label">Answer B:</label>
-              <input type="text" class="form-control" id="mcb">
-            </div>
-            <div class="form-group">
-              <label for="mcc" class="control-label">Answer C:</label>
-              <input type="text" class="form-control" id="mcc">
-            </div>
-            <div class="form-group">
-              <label for="mcd" class="control-label">Answer D:</label>
-              <input type="text" class="form-control" id="mcd">
-            </div>
-            <div class="form-group">
-              <label for="mcans" class="control-label">Answer:</label>
-              <input type="text" class="form-control" id="mcans">
-            </div>
-            <div class="form-group">
-              <label for="mctag" class="control-label">Tags:</label>
-              <textarea class="form-control" id="mctag"></textarea>
-            </div>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="type" class="btn btn-primary" ng-click="addmc()">Send message</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="type" ng-disabled="form.$invalid" class="btn btn-primary" ng-click="addmc()">Send message</button> -->
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <!-- <th>ID</th> -->
+            <th>Title</th>
+            <th>Description</th>
+            <!-- <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th> -->
+            <!-- <th>Answer</th> -->
+            <th>Tags</th>
+            <th>Creator</th>
+            <th>LMT</th>
+            <th>Action</th>
+          </tr>
+          <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name, Tags:tag} | orderBy:sort) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize" ng-cloak>
+            <td><input type="checkbox" ng-click="addCSV(mc._id)" ng-checked="boxChecked(mc._id)"></td>
+            <!-- <th>{{mc._id}} -->
+            <td>{{mc.Title}}</td>
+            <td ng-bind-html="mc.Description"></td>
+            <!-- <td ng-bind-html="mc.A"></td>
+            <td ng-bind-html="mc.B"></td>
+            <td ng-bind-html="mc.C"></td>
+            <td ng-bind-html="mc.D"></td> -->
+            <!-- <td>{{mc.Answer}}</td> -->
+            <td>{{mc.Tags}}</td>
+            <td>{{mc.Creator}}</td>
+            <td>{{mc.LastModfiedTime}}</td>
+            <td>
+              <button ng-if="canRemove(mc.Creator)" class="btn btn-danger" ng-click="remove(mc._id)">Remove</button>
+              <a class="btn btn-warning" ng-href="/{{mc._id}}" role="button">Detail</a>
+            </td>
+          </tr>
+        </thead>
+      </table>
+      <div class="text-center">
+        <ul uib-pagination total-items="filterMC.length" ng-model="currentPage" items-per-page="pageSize"></ul>
+      </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="mccreator" class="control-label">Creator:</label>
+                <input type="text" class="form-control" id="mccreator" ng-value="user" disabled>
+              </div>
+              <div class="form-group">
+                <label for="mctitle" class="control-label">Title:</label>
+                <input type="text" class="form-control" id="mctitle">
+              </div>
+              <div class="form-group">
+                <label for="mcdesc" class="control-label">Description:</label>
+                <textarea class="form-control" id="mcdesc"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="mca" class="control-label">Answer A:</label>
+                <input type="text" class="form-control" id="mca">
+              </div>
+              <div class="form-group">
+                <label for="mcb" class="control-label">Answer B:</label>
+                <input type="text" class="form-control" id="mcb">
+              </div>
+              <div class="form-group">
+                <label for="mcc" class="control-label">Answer C:</label>
+                <input type="text" class="form-control" id="mcc">
+              </div>
+              <div class="form-group">
+                <label for="mcd" class="control-label">Answer D:</label>
+                <input type="text" class="form-control" id="mcd">
+              </div>
+              <div class="form-group">
+                <label for="mcans" class="control-label">Answer:</label>
+                <input type="text" class="form-control" id="mcans">
+              </div>
+              <div class="form-group">
+                <label for="mctag" class="control-label">Tags:</label>
+                <textarea class="form-control" id="mctag"></textarea>
+              </div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="type" class="btn btn-primary" ng-click="addmc()">Send message</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="type" ng-disabled="form.$invalid" class="btn btn-primary" ng-click="addmc()">Send message</button> -->
+          </div>
         </div>
       </div>
     </div>

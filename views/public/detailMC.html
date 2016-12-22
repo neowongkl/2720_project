@@ -1,53 +1,64 @@
-<div ng-controller="detailmcCtrl">
+<div ng-controller="detailmcCtrl" class="view">
   <div class="container">
-    <div>
-      <label>QuestionID:</label>
-      <label>{{mc._id}}</label>
-    </div>
-    <div>
-      <label>Title:</label>
-      <label ng-if="!isEditing">{{mc.Title}}</label>
-    </div>
-    <div>
-      <label>Description:</label>
-      <!-- <label ng-if="!isEditing">{{mc.Description}}</label> -->
-      <label ng-bind-html="mc.Description"></label>
-    </div>
-    <div>
-      <label>A:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.A}}</label> -->
-      <label ng-bind-html="mc.A"></label>
-    </div>
-    <div>
-      <label>B:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.B}}</label> -->
-      <label ng-bind-html="mc.B"></label>
-    </div>
-    <div>
-      <label>C:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.C}}</label> -->
-      <label ng-bind-html="mc.C"></label>
-    </div>
-    <div>
-      <label>D:</label>
-      <!-- <label ng-if="!isEditing" >{{mc.D}}</label> -->
-      <label ng-bind-html="mc.D"></label>
-    </div>
-    <div>
-      <label>Answer:</label>
-      <label>{{mc.Answer}}</label>
-    </div>
-    <div>
-      <label>Tags:</label>
-      <label>{{mc.Tags}}</label>
-    </div>
-    <div>
-      <label>Creator:</label>
-      <label>{{mc.Creator}}</label>
-    </div>
-    <div>
-      <label>LastModfiedTime:</label>
-      <label>{{mc.LastModfiedTime}}</label>
+    <div class="mc-detail">
+      <div class="text-right">
+        <label>Creator:</label>
+        <label>{{mc.Creator}}</label>
+      </div>
+      <div class="text-right">
+        <label>Last Modfied Time:</label>
+        <label>{{mc.LastModfiedTime}}</label>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">QuestionID: {{mc._id}}</h3>
+        </div>
+        <div class="panel-body">
+          <label class="panel-title inline-block"> Title: </label>
+          <label class="panel-title">{{mc.Title}}</label>
+          <br>
+          <label>Description:</label>
+          <label ng-bind-html="mc.Description"></label>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="col-md-6">
+          <div class="choice">
+            <label>A:</label>
+            <label ng-bind-html="mc.A"></label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="choice">
+            <label>B:</label>
+            <label ng-bind-html="mc.B"></label>
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+          <div class="choice">
+            <label>C:</label>
+            <label ng-bind-html="mc.C"></label>
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+          <div class="choice">
+            <label>D:</label>
+            <label ng-bind-html="mc.D"></label>
+          </div>
+        </div>
+
+        <div class="col-md-12 section-answer">
+          <label>Answer:</label>
+          <label>{{mc.Answer}}</label>
+        </div>
+      </div>
+
+      <div>
+        <label>Tags:</label>
+        <label>{{mc.Tags}}</label>
+        <textarea ng-if="isEditing" class="form-control" id="mctag">{{mc.Tags}}</textarea>
+      </div>
     </div>
   </div>
 </div>
