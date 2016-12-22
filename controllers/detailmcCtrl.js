@@ -8,7 +8,15 @@ app.controller("detailmcCtrl", function($scope, $http){
     console.log("init detail ctrl");
     var id = window.location.pathname.slice(1);
     $http.get('/getonemc/'+id).success(function(response){
+      console.log("response");
       console.log(response);
+      if(response == ""){
+        alert("NO SUCH MC");
+        var url = window.location.href;
+        url =  url.replace(id,"viewMC");
+        console.log(url);
+        window.location = url;
+      }
       $scope.mc = response;
       $http.get('/checkCookie').success(function(response){
           console.log("checkCookie");
@@ -37,7 +45,24 @@ app.controller("detailmcCtrl", function($scope, $http){
 
   $scope.onEditClick = function(){
     console.log("enable edit");
-    $scope.isEditing = true;
+    var id = $scope.mc._id;
+
+    $http.get('/getonemc/'+id).success(function(response){
+      console.log("response");
+      console.log(response);
+      if(response == null){
+        alert("NO SUCH MC");
+        var url = window.location.href;
+        url =  url.replace(id,"viewMC");
+        console.log(url);
+        window.location = url;
+      }
+      else{
+        $scope.isEditing = true;
+      }
+    });
+
+
   };
 
   $scope.onCancelClick = function(){
