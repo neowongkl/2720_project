@@ -1,7 +1,7 @@
 app.controller("mcCtrl", function($scope, $http){
     console.log("in veiwmc ctrl diu");
 
-    $scope.pageSize = 2;
+    $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.mcs;
     $scope.user;
@@ -51,10 +51,24 @@ app.controller("mcCtrl", function($scope, $http){
 
   //private
   $scope.remove = function(id) {
-    console.log(id);
-    $http.delete('/delete/'+id).success(function(response){
-      console.log(response);
-      refresh();
+    $http.get('/checkCookie').success(function(response){
+      if(response == null || response != $scope.user){
+        window.alert("User is logged out");
+        refresh();
+        location.reload();
+      } else {
+        $http.get('/getonemc/'+id).success(function(response){
+          if(response == null){
+            window.alert("No such mc");
+            refresh();
+          } else {
+            $http.delete('/delete/'+id).success(function(response){
+              console.log(response);
+              refresh();
+            });
+          }
+        });
+      }
     });
   };
 

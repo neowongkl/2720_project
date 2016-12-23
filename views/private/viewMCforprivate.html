@@ -74,7 +74,10 @@
             <td ng-bind-html="mc.C"></td>
             <td ng-bind-html="mc.D"></td> -->
             <!-- <td>{{mc.Answer}}</td> -->
-            <td>{{mc.Tags}}</td>
+            <td>
+              <span ng-repeat="tag in mc.Tags" ng-if="!$last">{{tag}},</span>
+              <span ng-repeat="tag in mc.Tags" ng-if="$last">{{tag}}</span>
+            </td>
             <td>{{mc.Creator}}</td>
             <td>{{mc.LastModfiedTime}}</td>
             <td>

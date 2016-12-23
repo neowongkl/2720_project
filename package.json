@@ -20,6 +20,7 @@
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.7.0",
     "node-sass": "^4.0.0",
-    "pug": "^2.0.0-beta6"
+    "pug": "^2.0.0-beta6",
+    "sanitize-html": "^1.13.0"
   }
 }

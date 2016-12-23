@@ -19,6 +19,8 @@ var model = require("./db/model.js");
 // view engine setup
 app.set('view engine', 'pug');
 
+var sanitizeHtml = require('sanitize-html');
+
 // app.use(express.static(path.join(__dirname, 'public')));
 
 // routing the css and js
@@ -43,10 +45,17 @@ app.post('/updatemc/:id', function(req, res){
   else
     tags = [];
 
+  var clean = sanitizeHtml(req.body.Description, {
+    allowedTags: [ 'b', 'i', 'u', 'p', 'pre', 'br', 'img'],
+    allowedAttributes: {
+      'img': [ 'src', 'width', 'height' ]
+    },
+    allowedSchemes: [ 'data', 'http' ]
+  });
   var mc = {
     Creator: req.body.Creator,
     Title: req.body.Title,
-    Description: req.body.Description,
+    Description: clean,
     A: req.body.A,
     B: req.body.B,
     C: req.body.C,

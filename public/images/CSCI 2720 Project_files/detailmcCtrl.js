@@ -119,17 +119,74 @@ app.controller("detailmcCtrl", function($scope, $http){
     return valid;
   }
 
+  function whitelist(tagWhitelist, html) {
+    html = String(html).replace(/\[/g, '&#91;');
 
+    var tags = [];
+    html = html.replace(
+      /<!--[\s\S]*?-->|<(\/?)([a-z]\w*)(?:[^"'>]|"[^"]*"|'[^']*')*>/g,
+      function (_, close, tagName) {
+        if (tagName) {
+          tagName = tagName.toLowerCase();
+          if (tagWhitelist.hasOwnProperty(tagName) && tagWhitelist[tagName]) {
+            var index = tags.length;
+            tags.push('<' + (close || '') + tagName + '>');
+            return '[' + index + ']';
+          }
+        }
+        return '';
+      });
+
+    html = html.replace(/[<>"'@\`\u0000]/g,
+      function (c) {
+        switch (c) {
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '"': return '&quot;';
+          case '\'': return '&#39;';
+          case '@': return '&#64;';
+        }
+        return '&#' + c.charCodeAt(0) + ';';
+      });
+    if (html.indexOf('<') >= 0) { throw new Error(); }
+
+    var open = [];
+    for (var i = 0, n = tags.length; i < n; ++i) {
+      var tag = tags[i];
+      if (tag.charAt(1) === '/') {
+        var idx = open.lastIndexOf(tag);
+        if (idx < 0) { tags[i] = ""; }  // Drop close tag.
+        else {
+          tags[i] = open.slice(idx).reverse().join('');
+          open.length = idx;
+        }
+      } else if (!HTML5_VOID_ELEMENTS.test(tag)) {
+        open.push('</' + tag.substring(1));
+      }
+    }
+
+    html = html.replace(
+         /\[(\d+)\]/g, function (_, index) { return tags[index]; });
+
+
+    return html + open.reverse().join('');
+  }
+
+  var HTML5_VOID_ELEMENTS = new RegExp(
+       '^<(?:area|base|br|col|command|embed|hr|img|input'
+       + '|keygen|link|meta|param|source|track|wbr)\\b');
 
   $scope.updateMC = function(){
     console.log("update mc");
 
     var id = $scope.mc._id;
 
+    var str = whitelist({ p: true, u: true, i: true, b:true, pre:true, br: true, img: true, src:true}, $("#mcdesc").val());
+
     var data = {
       Creator: $scope.mc.Creator,
       Title: $("#mctitle").val(),
-      Description: $("#mcdesc").val(),
+      Description: str,
       A: $("#mca").val(),
       B: $("#mcb").val(),
       C: $("#mcc").val(),

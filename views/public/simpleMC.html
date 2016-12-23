@@ -47,7 +47,7 @@
           </tr>
           <tr ng-repeat="mc in filterMC = (mcs | filter:{Creator:name, Tags:tag} | orderBy:sort) | startForm: (currentPage - 1) * pageSize | limitTo: pageSize">
             <td>{{mc.Title}}</td>
-            <td>{{mc.Description}}</td>
+            <td ng-bind-html="mc.Description"></td>
             <td>{{mc.A}}</td>
             <td>{{mc.B}}</td>
             <td>{{mc.C}}</td>
